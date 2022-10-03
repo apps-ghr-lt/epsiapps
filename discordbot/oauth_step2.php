@@ -82,6 +82,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			echo '<script language="javascript">';
 			echo 'alert("Mauvaise mot de passe / Identifiant")';
 			echo '</script>';
+			
+			$user = doApiRequest($apiURLBase);
+
+			if ( (property_exists($user, 'code')) AND ($user->code or 1 === 0) ) {
+				echo 'session expired';
+		
+				header('Location: ' . REDIRECT_URL . '?action=login');
+			}
 		} else {
 			echo 'you suck ' . $checkLogin->httpcode;
 			echo '<br><br><br><br>';
