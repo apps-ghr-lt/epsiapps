@@ -117,6 +117,10 @@ function logout($url, $data=array()) {
     return json_decode($response);
 }
 
+
+echo 'Please specify an action parameter';
+die();
+
 ?>
 <style type="text/css">
 body {margin: 0;}
