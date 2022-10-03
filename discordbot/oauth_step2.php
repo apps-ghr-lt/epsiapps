@@ -78,25 +78,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		die();
 
 	} else {
-		echo 'you suck ' . $checkLogin->httpcode;
-		echo '<br><br><br><br>';
-		echo doApiRequest(
-			$apiURLLogin,
-			post: array(
-				"username" => $_POST['username'],
-				"password" => $_POST['password'],
-				"execution" => $token,
-				"_eventId" => "submit",
-				"geolocation" => "" 
-			),
-			headers: array(
-				"Accept" => "text/html",
-				"content-type" => "application/x-www-form-urlencoded",
-				"user-agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
-			),
-			returnjson: FALSE
-		);
-		return;
+		if (($checkLogin->httpcode == 401) or ($checkLogin->httpcode == 403)) {
+			echo '<script language="javascript">';
+			echo 'alert("Mauvaise mot de passe / Identifiant")';
+			echo '</script>';
+		} else {
+			echo 'you suck ' . $checkLogin->httpcode;
+			echo '<br><br><br><br>';
+			echo doApiRequest(
+				$apiURLLogin,
+				post: array(
+					"username" => $_POST['username'],
+					"password" => $_POST['password'],
+					"execution" => $token,
+					"_eventId" => "submit",
+					"geolocation" => "" 
+				),
+				headers: array(
+					"Accept" => "text/html",
+					"content-type" => "application/x-www-form-urlencoded",
+					"user-agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+				),
+				returnjson: FALSE
+			);
+			return;
+		}
 	}
 
 
